@@ -9,9 +9,8 @@ mknote
 """
 
 
-import subprocess # .call and .check_output
 import time # .time
-
+import os # .system
 
 print "Hello from mknote"
 
@@ -24,11 +23,18 @@ NOTE_DIR = '/Users/jon/Dropbox/life/Untitled\ Shit/mknote/'
 # less race-safe than tempfile.NamedTemporaryFile,
 # but sufficient for a program like mknote that won't be called multiple times per sec
 
-filename = time.time()
+filename = str(time.time())
 
 filename += '.txt'
 
 filename = NOTE_DIR + filename
 
-subprocess.call([MKNOTE_EDITOR, filename])
+# weirdly, when I tried using subprocess.call to create a file,
+# either via touch or mate,
+# there was some permissions problem that I couldn't resolve,
+# where mate prompted me for the root password,
+# and even after I provided it, couldn't save the file!
+# (and touch just silently failed)
+os.system(MKNOTE_EDITOR + ' ' + filename)
+
 
