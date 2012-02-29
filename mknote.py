@@ -10,6 +10,7 @@ mknote
 
 
 import time # .time
+import sys # .argv
 import os # .system
 
 print "Hello from mknote"
@@ -23,7 +24,12 @@ NOTE_DIR = '/Users/jon/Dropbox/life/Untitled\ Shit/mknote/'
 # less race-safe than tempfile.NamedTemporaryFile,
 # but sufficient for a program like mknote that won't be called multiple times per sec
 
-filename = str(time.time())
+filename = ''
+
+if len(sys.argv[1:]) >= 1:
+    filename += sys.argv[1] + '.'
+    
+filename += str(time.time())
 
 filename += '.txt'
 
